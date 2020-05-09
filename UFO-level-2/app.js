@@ -19,7 +19,9 @@ tabledata.forEach(function(ufoSightings) {
 
 
   // Select the button
-var button = d3.select("#filter-btn");
+// var button = d3.select("#filter-btn");
+var input = d3.select("input")
+var button = d3.selectAll(".filter")
 
 // Select the form
 // var form = d3.select("#form");
@@ -28,39 +30,43 @@ var button = d3.select("#filter-btn");
 // button.on("click", runEnter);
 // form.on("submit",runEnter);
 
+inputdict = {}
+
 // Complete the event handler function for the form
-button.on("click", function() {
+button.on("change", function() {
     // Prevent the page from refreshing
     d3.event.preventDefault()
-    tbody.html("")
     
     // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime")
+    var inputElement = d3.select(this).select("input")
     console.log(inputElement)
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
+    var inputID = inputElement.attr("id")
+    inputdict[inputID] = inputValue
 
     console.log(inputValue);
-    console.log(tabledata);
+    console.log(inputdict);
+    createnewtable()
+});
+    // console.log(tabledata);
+function createnewtable() {
+    let newdata = tabledata
+    Object.entries(inputdict).forEach(function([key, value]) {
+        newdata = newdata.filter(sighting => sighting[key] === value);
+        console.log(newdata);
+    });
 
-    // Use the form input to filter the data by ufo sighting date
-    var filterSightings = tabledata.filter(sighting => sighting.datetime === inputValue);
+    var tbody = d3.select("tbody");
+    tbody.html("")
 
-    console.log(filterSightings);
-
-    filterSightings.forEach(function(selections) {
-
-        console.log(selections);
-        
-
-        // Append one table row `tr` for each UFO Sighting object
+    newdata.forEach(function(x){
         var trow = tbody.append("tr");
-        // Use `Object.entries` to console.log each UFO Sighting value
-        Object.entries(selections).forEach(function([key, value]) {
+        Object.entries(x).forEach(function([key, value]) {
             console.log(key, value);
             // Append a cell to the row for each value
             var cell = trow.append("td");
             cell.text(value);
         });
-    });
-})
+    })
+}
