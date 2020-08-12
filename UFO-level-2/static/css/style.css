@@ -101,7 +101,7 @@ select {
   background-image: url("../images/nasa.jpg");
   background-attachment: fixed;
   background-position: bottom center;
-  background-size: cover;
+  background-size: contain;
 }
 
 .hero h1 {
