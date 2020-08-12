@@ -33,10 +33,3 @@ You can handle this... right? The planet Earth needs to know what we have found!
   3. `state`
   4. `country`
   5. `shape`
-
-
-- - -
-
-### Copyright
-
-Trilogy Education Services © 2019. All Rights Reserved.
